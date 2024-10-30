@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Conta Bancária</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <h1>Editar Conta Bancária</h1>
+    <form action="{{ url_for('edit_account', id=account[0]) }}" method="POST">
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" value="{{ account[1] }}" required><br>
+        <label for="sexo">Sexo:</label>
+        <select name="sexo" required>
+            <option value="Masculino" {% if account[2] == 'Masculino' %}selected{% endif %}>Masculino</option>
+            <option value="Feminino" {% if account[2] == 'Feminino' %}selected{% endif %}>Feminino</option>
+        </select><br>
+        <label for="idade">Idade:</label>
+        <input type="number" name="idade" value="{{ account[3] }}" required><br>
+        <label for="tipo_conta">Tipo de Conta:</label>
+        <select name="tipo_conta" required>
+            <option value="Corrente" {% if account[4] == 'Corrente' %}selected{% endif %}>Corrente</option>
+            <option value="Poupança" {% if account[4] == 'Poupança' %}selected{% endif %}>Poupança</option>
+        </select><br>
+        <label for="funcionario">Funcionário:</label>
+        <select name="funcionario" required>
+            <option value="1" {% if account[5] %}selected{% endif %}>Sim</option>
+            <option value="0" {% if not account[5] %}selected{% endif %}>Não</option>
+        </select><br>
+        <label for="salario">Salário:</label>
+        <input type="number" name="salario" value="{{ account[6] }}"><br>
+        <label for="saldo_conta">Saldo da Conta:</label>
+        <input type="number" name="saldo_conta" value="{{ account[7] }}"><br>
+        <label for="credito_imobiliario">Crédito Imobiliário:</label>
+        <select name="credito_imobiliario" required>
+            <option value="1" {% if account[8] %}selected{% endif %}>Sim</option>
+            <option value="0" {% if not account[8] %}selected{% endif %}>Não</option>
+        </select><br>
+        <label for="emprestimo">Empréstimo:</label>
+        <select name="emprestimo" required>
+            <option value="1" {% if account[9] %}selected{% endif %}>Sim</option>
+            <option value="0" {% if not account[9] %}selected{% endif %}>Não</option>
+        </select><br>
+        <button type="submit">Salvar Alterações</button>
+    </form>
+</body>
+</html>

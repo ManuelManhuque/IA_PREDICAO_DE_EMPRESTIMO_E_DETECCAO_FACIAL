@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prever Empréstimo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Prever Empréstimo</h1>
+        <div class="predict-container">
+            <form action="{{ url_for('predict_model_result') }}" method="POST">
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" class="form-control" id="nome" name="nome">
+                </div>
+                <div class="form-group">
+                    <label for="sexo">Sexo:</label>
+                    <select class="form-control" id="sexo" name="sexo">
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="idade">Idade:</label>
+                    <input type="number" class="form-control" id="idade" name="idade">
+                </div>
+                <div class="form-group">
+                    <label for="tipo_conta">Tipo de Conta:</label>
+                    <select class="form-control" id="tipo_conta" name="tipo_conta">
+                        <option value="Corrente">Corrente</option>
+                        <option value="Poupança">Poupança</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="funcionario">Funcionário:</label>
+                    <select class="form-control" id="funcionario" name="funcionario">
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="salario">Salário:</label>
+                    <input type="number" class="form-control" id="salario" name="salario">
+                </div>
+                <div class="form-group">
+                    <label for="saldo_conta">Saldo da Conta:</label>
+                    <input type="number" class="form-control" id="saldo_conta" name="saldo_conta">
+                </div>
+                <div class="form-group">
+                    <label for="credito_imobiliario">Crédito Imobiliário:</label>
+                    <select class="form-control" id="credito_imobiliario" name="credito_imobiliario">
+                        <option value="1">Sim</option>
+                        <option value="0">Não</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Prever</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar</a>
+            </form>
+
+            <!-- Div para exibir o resultado do modelo -->
+            <div class="result">
+                {% if prediction_text %}
+                    <h3>Resultado da Previsão:</h3>
+                    <p>{{ prediction_text }}</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excluir Conta Bancária</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Excluir Conta Bancária</h1>
+        <div class="delete-container">
+            <p>Você tem certeza que deseja excluir a conta bancária de {{ account.nome }}?</p>
+            <form action="{{ url_for('delete_account', id=account.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta conta bancária?')">
+                <button type="submit" class="btn btn-danger">Excluir</button>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

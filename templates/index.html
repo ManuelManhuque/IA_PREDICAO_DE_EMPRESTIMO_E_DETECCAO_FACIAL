@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Estilo personalizado para o menu lateral */
+        #sidebar {
+            position: fixed;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: #f8f9fa;
+            transition: left 0.3s;
+        }
+        #sidebar.active {
+            left: 0;
+        }
+        #dismiss {
+            font-size: 20px;
+            margin-left: 220px;
+            cursor: pointer;
+        }
+        /* Estilo para os itens do menu e submenu */
+        .menu-item, .submenu-item {
+            margin-left: 20px; /* Margem à esquerda */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Barra de navegação -->
+<nav class="navbar navbar-light bg-light">
+    <button class="navbar-toggler" type="button" id="sidebarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Dados de uma Conta Bancaria dos Clientes</a>
+</nav>
+
+<!-- Menu lateral -->
+<div class="wrapper">
+    <nav id="sidebar">
+        <div id="dismiss">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        <ul class="list-unstyled components">
+            <li class="menu-item">
+                <a href="{{ url_for('add_account') }}">Adicionar Conta</a>
+            </li>
+            <li class="menu-item">
+                <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Resultados de Modelos</a>
+                <ul class="collapse list-unstyled" id="submenu1">
+                    <li><a href="{{ url_for('predict_loan_approval') }}" class="submenu-item">Modelo de Classificação</a></li>
+                    <li><a href="{{ url_for('regression_results') }}" class="submenu-item">Modelo de Regressão</a></li>
+                    <li><a href="{{ url_for('clusters') }}" class="submenu-item">Modelo de Clusterização</a></li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Previsão de Modelos</a>
+                <ul class="collapse list-unstyled" id="submenu2">
+                    <li><a href="{{ url_for('predict_model') }}" class="submenu-item">Previsão de Classificação</a></li>
+                    <li><a href="{{ url_for('predict_regress') }}" class="submenu-item">Previsão de Regressão</a></li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <li><a href="{{ url_for('Visao') }}" class="submenu-item">Visao Computacional</a></li>
+            </li>
+        </ul>
+    </nav>
+</div>
+<div class="container mt-4">
+    <h1>Lista de Contas Bancárias</h1>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Sexo</th>
+                    <th>Idade</th>
+                    <th>Tipo de Conta</th>
+                    <th>Funcionário</th>
+                    <th>Salário</th>
+                    <th>Saldo da Conta</th>
+                    <th>Credito Imobiliário</th>
+                    <th>Empréstimo</th>
+                    <th>Ações</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for account in contas_bancarias %}
+                <tr>
+                    <td>{{ account[0] }}</td>
+                    <td>{{ account[1] }}</td>
+                    <td>{{ account[2] }}</td>
+                    <td>{{ account[3] }}</td>
+                    <td>{{ account[4] }}</td>
+                    <td>{% if account[5] %}Sim{% else %}Não{% endif %}</td>
+                    <td>{{ account[6] }}</td>
+                    <td>{{ account[7] }}</td>
+                    <td>{% if account[8] %}Sim{% else %}Não{% endif %}</td>
+                    <td>{{ "Sim" if account[9] else "Não" }}</td> <!-- Exibe "Sim" se o valor for True, senão "Não" -->
+                    <td>
+                        <a href="{{ url_for('view_account', id=account[0]) }}" class="btn btn-primary btn-sm">Visualizar</a>
+                        <a href="{{ url_for('edit_account', id=account[0]) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ url_for('delete_account', id=account[0]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta conta bancária?')">
+                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                        </form>
+                    </td>
+                    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Ativar/desativar o menu lateral ao clicar no botão de toggler da barra de navegação
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+    // Fechar o menu lateral ao clicar no botão "dismiss"
+    $('#dismiss').on('click', function () {
+        $('#sidebar').removeClass('active');
+    });
+</script>
+</body>
+</html>

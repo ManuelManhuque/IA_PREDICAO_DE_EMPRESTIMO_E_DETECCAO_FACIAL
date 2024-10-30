@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Regressão</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .img-fluid {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados da Regressão</h1>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Avaliação do Modelo</h2>
+                <p>O Erro Médio Quadrático (MSE) é uma medida que quantifica a diferença entre os valores previstos pelo modelo e os valores reais. Neste caso, o MSE é {{ mse }}.</p>
+                <p>A Pontuação R^2 é uma métrica que indica a proporção da variância nos valores da variável dependente que é previsível a partir dos recursos independentes. Ela fornece uma medida da qualidade das previsões do modelo. Neste caso, a Pontuação R^2 é {{ r2 }}.</p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h2>Previsões de Salário vs Real</h2>
+                <img src="{{ predictions_image }}" alt="Previsões de Salário vs Real" class="img-fluid">
+                <p>Este gráfico compara as previsões de salário feitas pelo modelo com os valores reais de salário.</p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h2>Gráfico de Resíduos</h2>
+                <img src="{{ residuals_plot_image }}" alt="Gráfico de Resíduos" class="img-fluid">
+                <p>Este gráfico mostra os resíduos, ou seja, a diferença entre os valores reais e as previsões do modelo.</p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h2>Distribuição dos Resíduos</h2>
+                <img src="{{ residuals_distribution_image }}" alt="Distribuição dos Resíduos" class="img-fluid">
+                <p>Este gráfico exibe a distribuição dos resíduos, ou seja, os erros de previsão do modelo.</p>
+            </div>
+        </div>
+
+        <br>
+        <a href="/" class="btn btn-secondary">Voltar para a Página Inicial</a>
+    </div>
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

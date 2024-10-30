@@ -1,0 +1,217 @@
+/* Estilos gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: auto;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+a{
+    text-decoration: none;
+    color: #fff;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Animações */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para a página de visualização */
+.view-container {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.view-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.view-details {
+    margin-bottom: 10px;
+}
+
+.view-details strong {
+    margin-right: 10px;
+}
+
+.view-actions {
+    margin-top: 20px;
+}
+
+.view-actions a,
+.view-actions button {
+    margin-right: 10px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block; /* Garante que os botões fiquem na mesma linha */
+}
+
+.view-actions button {
+    padding: 10px 20px;
+}
+
+.view-actions a {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+}
+
+.view-actions a:hover {
+    background-color: #218838;
+}
+
+.view-actions button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.view-actions button:hover {
+    background-color: #c82333;
+}
+
+/* Estilos para a página de exclusão */
+.delete-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.delete-container p {
+    margin-bottom: 20px;
+}
+
+.delete-container button {
+    padding: 10px 20px;
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.delete-container button:hover {
+    background-color: #c82333;
+}
+
+/* Estilos para a página de índice */
+.index-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.index-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.index-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.index-container th,
+.index-container td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.index-container th {
+    background-color: #f2f2f2;
+}
+
+.index-container tr:hover {
+    background-color: #f9f9f9;
+}
+
+.index-container .btn-container {
+    margin-top: 20px;
+}
+
+.index-container .btn-container a,
+.index-container .btn-container button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.index-container .btn-container a:hover,
+.index-container .btn-container button:hover {
+    background-color: #0056b3;
+}
+
+.btn-group-horizontal > .btn,
+.btn-group-horizontal > .btn-group {
+    float: left;
+}
