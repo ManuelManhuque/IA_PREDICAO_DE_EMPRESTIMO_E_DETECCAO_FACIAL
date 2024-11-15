@@ -4,63 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prever Empréstimo</title>
+    
+    <!-- Importa o Bootstrap para estilo e responsividade -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        /* Estilo básico do corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container principal centralizado com sombra e bordas arredondadas */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Título principal da página */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        /* Estilos adicionais para botões */
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            font-size: 1em;
+            font-weight: bold;
+            padding: 12px;
+            margin-top: 10px;
+        }
+
+        /* Estilo do contêiner do resultado */
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            color: #343a40;
+            text-align: center;
+        }
+
+        /* Estilo do título do resultado */
+        .result h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
+    <!-- Contêiner principal que centraliza o conteúdo da página -->
     <div class="container">
+        <!-- Título da página -->
         <h1>Prever Empréstimo</h1>
+        
+        <!-- Formulário de entrada de dados para previsão -->
         <div class="predict-container">
             <form action="{{ url_for('predict_model_result') }}" method="POST">
+                
+                <!-- Campo Nome -->
                 <div class="form-group">
                     <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" id="nome" name="nome">
+                    <input type="text" class="form-control" id="nome" name="nome" required>
                 </div>
+
+                <!-- Campo Sexo -->
                 <div class="form-group">
                     <label for="sexo">Sexo:</label>
-                    <select class="form-control" id="sexo" name="sexo">
+                    <select class="form-control" id="sexo" name="sexo" required>
                         <option value="Masculino">Masculino</option>
                         <option value="Feminino">Feminino</option>
                     </select>
                 </div>
+
+                <!-- Campo Idade -->
                 <div class="form-group">
                     <label for="idade">Idade:</label>
-                    <input type="number" class="form-control" id="idade" name="idade">
+                    <input type="number" class="form-control" id="idade" name="idade" min="18" max="100" required>
                 </div>
+
+                <!-- Campo Tipo de Conta -->
                 <div class="form-group">
                     <label for="tipo_conta">Tipo de Conta:</label>
-                    <select class="form-control" id="tipo_conta" name="tipo_conta">
+                    <select class="form-control" id="tipo_conta" name="tipo_conta" required>
                         <option value="Corrente">Corrente</option>
                         <option value="Poupança">Poupança</option>
                     </select>
                 </div>
+
+                <!-- Campo Funcionário -->
                 <div class="form-group">
                     <label for="funcionario">Funcionário:</label>
-                    <select class="form-control" id="funcionario" name="funcionario">
+                    <select class="form-control" id="funcionario" name="funcionario" required>
                         <option value="1">Sim</option>
                         <option value="0">Não</option>
                     </select>
                 </div>
+
+                <!-- Campo Salário -->
                 <div class="form-group">
                     <label for="salario">Salário:</label>
-                    <input type="number" class="form-control" id="salario" name="salario">
+                    <input type="number" class="form-control" id="salario" name="salario" min="0" step="0.01" required>
                 </div>
+
+                <!-- Campo Saldo da Conta -->
                 <div class="form-group">
                     <label for="saldo_conta">Saldo da Conta:</label>
-                    <input type="number" class="form-control" id="saldo_conta" name="saldo_conta">
+                    <input type="number" class="form-control" id="saldo_conta" name="saldo_conta" min="0" step="0.01" required>
                 </div>
+
+                <!-- Campo Crédito Imobiliário -->
                 <div class="form-group">
                     <label for="credito_imobiliario">Crédito Imobiliário:</label>
-                    <select class="form-control" id="credito_imobiliario" name="credito_imobiliario">
+                    <select class="form-control" id="credito_imobiliario" name="credito_imobiliario" required>
                         <option value="1">Sim</option>
                         <option value="0">Não</option>
                     </select>
                 </div>
+
+                <!-- Botão para submeter o formulário e o botão para voltar -->
                 <button type="submit" class="btn btn-primary">Prever</button>
                 <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar</a>
             </form>
 
-            <!-- Div para exibir o resultado do modelo -->
+            <!-- Seção para exibir o resultado da previsão -->
             <div class="result">
                 {% if prediction_text %}
                     <h3>Resultado da Previsão:</h3>

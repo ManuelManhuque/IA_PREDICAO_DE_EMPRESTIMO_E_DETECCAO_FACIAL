@@ -1,72 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Configuração de meta tags para caracteres e responsividade -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar Conta Bancária</title>
+
+    <!-- Importação do Bootstrap para estilização -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Importação de estilo customizado -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Estilização adicional para melhor apresentação */
+        body {
+            background-color: #f8f9fa; /* Cor de fundo clara */
+        }
+        .container {
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .form-group label {
+            font-weight: 500;
+        }
+        .btn {
+            margin-right: 10px; /* Espaço entre botões */
+        }
+        .error-message {
+            color: red;
+            font-size: 0.9rem;
+            display: none;
+        }
+    </style>
 </head>
 <body>
+    <!-- Container principal para agrupar todos os elementos -->
     <div class="container">
+        <!-- Cabeçalho da página -->
         <h1>Adicionar Conta Bancária</h1>
-        <div class="add-container">
-            <form action="{{ url_for('add_account') }}" method="POST">
-                <div class="form-group">
-                    <label for="nome">Nome:</label>
-                    <input type="text" class="form-control" id="nome" name="nome">
-                </div>
-                <div class="form-group">
-                    <label for="sexo">Sexo:</label>
-                    <select class="form-control" id="sexo" name="sexo">
-                        <option value="Masculino">Masculino</option>
-                        <option value="Feminino">Feminino</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="idade">Idade:</label>
-                    <input type="number" class="form-control" id="idade" name="idade">
-                </div>
-                <div class="form-group">
-                    <label for="tipo_conta">Tipo de Conta:</label>
-                    <select class="form-control" id="tipo_conta" name="tipo_conta">
-                        <option value="Corrente">Corrente</option>
-                        <option value="Poupança">Poupança</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="funcionario">Funcionário:</label>
-                    <select class="form-control" id="funcionario" name="funcionario">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="salario">Salário:</label>
-                    <input type="number" class="form-control" id="salario" name="salario">
-                </div>
-                <div class="form-group">
-                    <label for="saldo_conta">Saldo da Conta:</label>
-                    <input type="number" class="form-control" id="saldo_conta" name="saldo_conta">
-                </div>
-                <div class="form-group">
-                    <label for="credito_imobiliario">Crédito Imobiliário:</label>
-                    <select class="form-control" id="credito_imobiliario" name="credito_imobiliario">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="emprestimo">Empréstimo:</label>
-                    <select class="form-control" id="emprestimo" name="emprestimo">
-                        <option value="1">Sim</option>
-                        <option value="0">Não</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Adicionar</button>
-                <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
-            </form>
-        </div>
+
+        <!-- Formulário de entrada de dados -->
+        <form id="bankForm" action="{{ url_for('add_account') }}" method="POST" onsubmit="return validateForm()">
+            
+            <!-- Campo de entrada para nome -->
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome" placeholder="Digite o nome completo" required>
+                <div class="error-message" id="nomeError">O nome é obrigatório.</div>
+            </div>
+            
+            <!-- Campo de seleção para gênero -->
+            <div class="form-group">
+                <label for="sexo">Sexo:</label>
+                <select class="form-control" id="sexo" name="sexo" required>
+                    <option value="">Selecione</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Feminino">Feminino</option>
+                </select>
+                <div class="error-message" id="sexoError">Selecione o sexo.</div>
+            </div>
+            
+            <!-- Campo de entrada para idade -->
+            <div class="form-group">
+                <label for="idade">Idade:</label>
+                <input type="number" class="form-control" id="idade" name="idade" min="18" max="100" placeholder="Digite a idade" required>
+                <div class="error-message" id="idadeError">A idade deve estar entre 18 e 100 anos.</div>
+            </div>
+            
+            <!-- Campo de seleção para tipo de conta -->
+            <div class="form-group">
+                <label for="tipo_conta">Tipo de Conta:</label>
+                <select class="form-control" id="tipo_conta" name="tipo_conta" required>
+                    <option value="">Selecione</option>
+                    <option value="Corrente">Corrente</option>
+                    <option value="Poupança">Poupança</option>
+                </select>
+                <div class="error-message" id="tipoContaError">Selecione o tipo de conta.</div>
+            </div>
+            
+            <!-- Campo de seleção para funcionário -->
+            <div class="form-group">
+                <label for="funcionario">Funcionário:</label>
+                <select class="form-control" id="funcionario" name="funcionario" required>
+                    <option value="">Selecione</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+                <div class="error-message" id="funcionarioError">Selecione se é funcionário.</div>
+            </div>
+            
+            <!-- Campo de entrada para salário -->
+            <div class="form-group">
+                <label for="salario">Salário:</label>
+                <input type="number" class="form-control" id="salario" name="salario" min="0" step="0.01" placeholder="Digite o salário" required>
+                <div class="error-message" id="salarioError">O salário deve ser maior ou igual a 0.</div>
+            </div>
+            
+            <!-- Campo de entrada para saldo da conta -->
+            <div class="form-group">
+                <label for="saldo_conta">Saldo da Conta:</label>
+                <input type="number" class="form-control" id="saldo_conta" name="saldo_conta" min="0" step="0.01" placeholder="Digite o saldo inicial" required>
+                <div class="error-message" id="saldoContaError">O saldo deve ser maior ou igual a 0.</div>
+            </div>
+            
+            <!-- Campo de seleção para crédito imobiliário -->
+            <div class="form-group">
+                <label for="credito_imobiliario">Crédito Imobiliário:</label>
+                <select class="form-control" id="credito_imobiliario" name="credito_imobiliario" required>
+                    <option value="">Selecione</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+                <div class="error-message" id="creditoImobiliarioError">Selecione se possui crédito imobiliário.</div>
+            </div>
+            
+            <!-- Campo de seleção para empréstimo -->
+            <div class="form-group">
+                <label for="emprestimo">Empréstimo:</label>
+                <select class="form-control" id="emprestimo" name="emprestimo" required>
+                    <option value="">Selecione</option>
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+                <div class="error-message" id="emprestimoError">Selecione se possui empréstimo.</div>
+            </div>
+            
+            <!-- Botões de envio e cancelamento -->
+            <button type="submit" class="btn btn-primary">Adicionar</button>
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
     </div>
+
+    <!-- Inclusão do JavaScript do Bootstrap para funcionalidades dinâmicas -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Script de validação personalizada -->
+    <script>
+        function validateForm() {
+            let isValid = true;
+            const fields = [
+                { id: 'nome', errorId: 'nomeError', message: 'O nome é obrigatório.' },
+                { id: 'sexo', errorId: 'sexoError', message: 'Selecione o sexo.' },
+                { id: 'idade', errorId: 'idadeError', message: 'A idade deve estar entre 18 e 100 anos.', min: 18, max: 100 },
+                { id: 'tipo_conta', errorId: 'tipoContaError', message: 'Selecione o tipo de conta.' },
+                { id: 'funcionario', errorId: 'funcionarioError', message: 'Selecione se é funcionário.' },
+                { id: 'salario', errorId: 'salarioError', message: 'O salário deve ser maior ou igual a 0.', min: 0 },
+                { id: 'saldo_conta', errorId: 'saldoContaError', message: 'O saldo deve ser maior ou igual a 0.', min: 0 },
+                { id: 'credito_imobiliario', errorId: 'creditoImobiliarioError', message: 'Selecione se possui crédito imobiliário.' },
+                { id: 'emprestimo', errorId: 'emprestimoError', message: 'Selecione se possui empréstimo.' }
+            ];
+
+            fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                const errorElement = document.getElementById(field.errorId);
+                if (!element.value || (field.min !== undefined && element.value < field.min) || (field.max !== undefined && element.value > field.max)) {
+                    errorElement.style.display = 'block';
+                    isValid = false;
+                } else {
+                    errorElement.style.display = 'none';
+                }
+            });
+
+            return isValid;
+        }
+    </script>
 </body>
 </html>

@@ -7,9 +7,12 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.cluster import KMeans  
 
 app = Flask(__name__)
-app.secret_key = 'jacinto#2002'
+app.secret_key = 'manuel#2002'
+
+
 
 def create_table():
     conn = sqlite3.connect('contas_bancarias.db')
@@ -32,7 +35,7 @@ create_table()
 
 # Função para obter os dados das contas bancárias
 def get_banking_data():
-    conn = sqlite3.connect('contas_bancarias.db')
+    conn = sqlite3.connect('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.db')
     c = conn.cursor()
     c.execute("SELECT * FROM contas_bancarias")
     rows = c.fetchall()
@@ -41,8 +44,8 @@ def get_banking_data():
 
 # Função para carregar o modelo treinado e os resultados do modelo
 def load_model_and_results():
-    model = joblib.load('modelo_classificacao.pkl')
-    with open('resultados_classificacao.pkl', 'rb') as f:
+    model = joblib.load('C:/Users/manuel/Desktop/projecto inar/Modelos/modelo_classificacao.pkl')
+    with open('C:/Users/manuel/Desktop/projecto inar/Modelos/resultados_classificacao.pkl', 'rb') as f:
         resultados = pickle.load(f)
     return model, resultados
 
@@ -52,12 +55,12 @@ model, resultados = load_model_and_results()
 
 def load_model_and_cluster():
     cluster = None
-    with open('modelo_clusters.pkl', 'rb') as f:
+    with open('C:/Users/manuel/Desktop/projecto inar/Modelos/modelo_clusters.pkl', 'rb') as f:
         cluster = pickle.load(f)
     return cluster
 
 def load_regress_model():
-    with open('modelo_regressao.pkl', 'rb') as f:
+    with open('C:/Users/manuel/Desktop/projecto inar/Modelos/modelo_regressao.pkl', 'rb') as f:
         rmodel = pickle.load(f)
     return rmodel
 
@@ -72,9 +75,9 @@ def load_regression_results():
         r2 = float(f.readline().split(':')[1].strip())
 
     # Carregar as imagens
-    predictions_image = 'static/imagem/previsões.png'
-    residuals_plot_image = 'static/imagem/resíduos.png'
-    residuals_distribution_image = 'static/imagem/distribuição.png'
+    predictions_image = 'C:/Users/manuel/Desktop/projecto inar/static/imagem/previsões.png'
+    residuals_plot_image = 'C:/Users/manuel/Desktop/projecto inar/static/imagem/resíduos.png'
+    residuals_distribution_image = 'C:/Users/manuel/Desktop/projecto inar/static/imagem/distribuição.png'
 
     return mse, r2, predictions_image, residuals_plot_image, residuals_distribution_image
 
@@ -95,7 +98,7 @@ def detect_faces(image):
 
 @app.route('/')
 def index():
-    conn = sqlite3.connect('contas_bancarias.db')
+    conn = sqlite3.connect('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.db')
     c = conn.cursor()
     c.execute("SELECT * FROM contas_bancarias")
     contas_bancarias = c.fetchall()
@@ -105,7 +108,7 @@ def index():
 @app.route('/add_account', methods=['GET', 'POST'])
 def add_account():
     if request.method == 'POST':
-        conn = sqlite3.connect('contas_bancarias.db')
+        conn = sqlite3.connect('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.db')
         c = conn.cursor()
         nome = request.form['nome']
         sexo = request.form['sexo']
@@ -127,7 +130,7 @@ def add_account():
 
 @app.route('/view_account/<int:id>', methods=['GET'])
 def view_account(id):
-    conn = sqlite3.connect('contas_bancarias.db')
+    conn = sqlite3.connect('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.db')
     c = conn.cursor()
     c.execute("SELECT * FROM contas_bancarias WHERE id=?", (id,))
     account = c.fetchone()
@@ -136,7 +139,7 @@ def view_account(id):
 
 @app.route('/edit_account/<int:id>', methods=['GET', 'POST'])
 def edit_account(id):
-    conn = sqlite3.connect('contas_bancarias.db')
+    conn = sqlite3.connect('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.db')
     c = conn.cursor()
     if request.method == 'GET':
         c.execute("SELECT * FROM contas_bancarias WHERE id=?", (id,))
@@ -162,7 +165,7 @@ def edit_account(id):
 
 @app.route('/delete_account/<int:id>', methods=['POST'])
 def delete_account(id):
-    conn = sqlite3.connect('contas_bancarias.db')
+    conn = sqlite3.connect('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.db')
     c = conn.cursor()
     c.execute("DELETE FROM contas_bancarias WHERE id=?", (id,))
     conn.commit()
@@ -185,7 +188,7 @@ def predict_loan_approval():
     plt.xlabel('Rotulos Previstos')
     plt.ylabel('Rotulos Verdadeiros')
     plt.title('Matrix de Confusao')
-    plt.savefig('static/imagem/confusion_matrix.png')
+    plt.savefig('C:/Users/manuel/Desktop/projecto inar/static/imagem/confusion_matrix.png')
     plt.close(cm_plt)
     
     # Passar a acurácia e o caminho para a imagem da matriz de confusão para o template HTML
@@ -245,11 +248,11 @@ def predict_regress():
 @app.route('/predict_regression_result', methods=['POST'])
 def predict_regression_result():
     # Carregar o modelo treinado
-    with open('modelo_regressao.pkl', 'rb') as f:
+    with open('C:/Users/manuel/Desktop/projecto inar/Modelos/modelo_regressao.pkl', 'rb') as f:
         model = pickle.load(f)
 
     # Carregar os objetos PolynomialFeatures e StandardScaler
-    with open('poly_scaler.pkl', 'rb') as f:
+    with open('C:/Users/manuel/Desktop/projecto inar/Modelos/poly_scaler.pkl', 'rb') as f:
         poly, scaler = pickle.load(f)
 
     # Extrair os dados do formulário
@@ -277,7 +280,7 @@ def predict_regression_result():
 @app.route('/clusters')
 def clusters():
     # Carregar os dados
-    data = pd.read_csv('contas_bancarias.csv')
+    data = pd.read_csv('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.csv')
     
     # Selecionar apenas as colunas relevantes para clustering
     data_for_clustering = data[['idade', 'tipo_conta', 'saldo_conta']]
@@ -299,23 +302,23 @@ def clusters():
     plt.xlabel('Idade')
     plt.ylabel('Saldo Conta')
     plt.title('Clusters de Clientes (Idade vs Saldo Conta)')
-    plt.savefig('static/clusters_idade_saldo.png')
+    plt.savefig('C:/Users/manuel/Desktop/projecto inar/static/imagem/clusters_idade_saldo.png')
 
     plt.subplot(1, 3, 2)
     plt.scatter(data['idade'], data['tipo_conta'], c=data['cluster'], cmap='viridis', s=50, alpha=0.5)
     plt.xlabel('Idade')
     plt.ylabel('Tipo Conta')
     plt.title('Clusters de Clientes (Idade vs Tipo Conta)')
-    plt.savefig('static/clusters_idade_tipo_conta.png')
+    plt.savefig('C:/Users/manuel/Desktop/projecto inar/static/imagem/clusters_idade_tipo_conta.png')
 
     plt.subplot(1, 3, 3)
     plt.scatter(data['tipo_conta'], data['saldo_conta'], c=data['cluster'], cmap='viridis', s=50, alpha=0.5)
     plt.xlabel('Tipo Conta')
     plt.ylabel('Saldo Conta')
     plt.title('Clusters de Clientes (Tipo Conta vs Saldo Conta)')
-    plt.savefig('static/clusters_tipo_conta_saldo.png')
+    plt.savefig('C:/Users/manuel/Desktop/projecto inar/static/imagem/clusters_tipo_conta_saldo.png')
     
-    return render_template('clusters.html', clusters_idade_saldo_image='static/clusters_idade_saldo.png', clusters_idade_tipo_conta_image='static/clusters_idade_tipo_conta.png', clusters_tipo_conta_saldo_image='static/clusters_tipo_conta_saldo.png')
+    return render_template('clusters.html', clusters_idade_saldo_image='C:/Users/manuel/Desktop/projecto inar/static/imagem/clusters_idade_saldo.png', clusters_idade_tipo_conta_image='C:/Users/manuel/Desktop/projecto inar/static/imagem/clusters_idade_tipo_conta.png', clusters_tipo_conta_saldo_image='C:/Users/manuel/Desktop/projecto inar/static/imagem/clusters_tipo_conta_saldo.png')
 
 
 @app.route('/Visao')

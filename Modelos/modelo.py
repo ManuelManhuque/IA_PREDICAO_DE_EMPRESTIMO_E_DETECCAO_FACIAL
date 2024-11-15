@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix
 
 # Carregando os dados do arquivo CSV
 data = []
-with open('contas_bancarias.csv', newline='') as csvfile:
+with open('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         data.append(row)

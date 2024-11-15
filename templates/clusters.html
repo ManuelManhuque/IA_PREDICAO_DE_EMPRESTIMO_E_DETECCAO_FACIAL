@@ -1,29 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags para definição de caracteres e responsividade -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados dos Clusters</title>
+
+    <!-- Bootstrap para estilização -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        /* Estilizações adicionais */
+        body {
+            background-color: #f7f7f7;
+        }
+        .container {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        figure {
+            text-align: center;
+            margin-top: 20px;
+        }
+        figcaption {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        .btn-secondary {
+            display: block;
+            margin: 20px auto;
+            width: 150px;
+            text-align: center;
+        }
+        .nav-bar {
+            background-color: #343a40;
+            padding: 10px;
+        }
+        .nav-bar a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .nav-bar a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <!-- Chart.js para gráficos interativos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    <!-- Barra de navegação simples -->
+    <div class="nav-bar">
+        <a href="templates/index.html">Página Inicial</a>
+        <a href="/clusters">Resultados dos Clusters</a>
+        
+        
+    </div>
+
+    <!-- Contêiner principal -->
     <div class="container">
         <h1>Resultados dos Clusters</h1>
         <div class="row">
             <div class="col-md-12">
                 <figure>
-                    <img src="{{ clusters_tipo_conta_saldo_image }}" alt="Clusters Tipo Conta vs Saldo Conta" class="img-fluid" style="max-width: 200%; height: auto;">
-                    <figcaption>Este gráfico representa a distribuição dos clusters com base no tipo de conta e no saldo da conta. Cada ponto representa um cliente, onde a cor indica o cluster ao qual o cliente pertence. O eixo x representa o tipo de conta e o eixo y representa o saldo da conta.</figcaption>
+                    <img src="{{ clusters_tipo_conta_saldo_image }}" alt="Clusters Tipo Conta vs Saldo Conta" class="img-fluid" style="max-width: 100%; height: auto;">
+                    <figcaption>
+                        Este gráfico representa a distribuição dos clusters com base no tipo de conta e no saldo da conta. Cada ponto representa um cliente, onde a cor indica o cluster ao qual o cliente pertence. O eixo x representa o tipo de conta e o eixo y representa o saldo da conta.
+                    </figcaption>
                 </figure>
-                <p>A distribuição dos clusters neste gráfico mostra como os clientes se agrupam com base em suas características, como tipo de conta e saldo da conta. Isso pode ser útil para segmentar os clientes e personalizar estratégias de marketing ou oferta de serviços.</p>
+                <p class="mt-3">
+                    A distribuição dos clusters neste gráfico mostra como os clientes se agrupam com base em suas características, como tipo de conta e saldo da conta. Isso pode ser útil para segmentar os clientes e personalizar estratégias de marketing ou oferta de serviços.
+                </p>
+
+                <!-- Gráfico interativo com Chart.js -->
+                <canvas id="clusterChart" width="400" height="200"></canvas>
             </div>
         </div>
-        <br>
+
+        <!-- Botão de navegação de retorno -->
         <a href="/" class="btn btn-secondary">Voltar</a>
     </div>
-    <!-- JavaScript -->
+
+    <!-- JavaScript do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+    <!-- Script para configurar o gráfico com Chart.js -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            var ctx = document.getElementById('clusterChart').getContext('2d');
+            var clusterChart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Cluster 1',
+                        data: [
+                            { x: 1, y: 500 },
+                            { x: 2, y: 1500 },
+                            { x: 3, y: 3000 }
+                        ],
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                    }, {
+                        label: 'Cluster 2',
+                        data: [
+                            { x: 1, y: 700 },
+                            { x: 2, y: 1300 },
+                            { x: 3, y: 2500 }
+                        ],
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Tipo de Conta'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Saldo da Conta'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

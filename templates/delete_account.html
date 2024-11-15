@@ -1,22 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta tags para definição de caracteres e responsividade -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Excluir Conta Bancária</title>
+
+    <!-- Importação do Bootstrap para estilização -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Estilo adicional para melhor apresentação */
+        body {
+            background-color: #f7f7f7; /* Fundo suave */
+        }
+        .container {
+            margin-top: 50px; /* Margem superior */
+            padding: 20px;
+            background-color: #fff; /* Fundo branco */
+            border-radius: 8px; /* Bordas arredondadas */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra leve */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #dc3545; /* Cor vermelha para destaque */
+        }
+        .delete-container {
+            text-align: center; /* Centraliza o texto */
+        }
+        .btn {
+            margin: 10px 5px; /* Espaçamento entre botões */
+        }
+    </style>
 </head>
 <body>
+    <!-- Container principal para centralizar o conteúdo -->
     <div class="container">
+        <!-- Cabeçalho da página -->
         <h1>Excluir Conta Bancária</h1>
+
+        <!-- Mensagem de confirmação -->
         <div class="delete-container">
-            <p>Você tem certeza que deseja excluir a conta bancária de {{ account.nome }}?</p>
+            <p>Você tem certeza que deseja excluir a conta bancária de <strong>{{ account.nome }}</strong>?</p>
+
+            <!-- Formulário para envio da exclusão -->
             <form action="{{ url_for('delete_account', id=account.id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta conta bancária?')">
+                <!-- Botão para confirmar exclusão -->
                 <button type="submit" class="btn btn-danger">Excluir</button>
+                <!-- Botão de cancelamento -->
                 <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>
+
+    <!-- JavaScript do Bootstrap para funcionalidades -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

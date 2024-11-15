@@ -8,7 +8,7 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_squared_error, r2_score
 
 # Carregar o arquivo CSV
-df = pd.read_csv('contas_bancarias.csv')
+df = pd.read_csv('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.csv')
 
 # Prepare data
 X = df[['idade', 'tipo_conta', 'saldo_conta']]

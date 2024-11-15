@@ -4,54 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados da Regressão</title>
+    
+    <!-- Bootstrap para estilização e responsividade -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    
     <style>
+        /* Estilo da imagem para responsividade */
         .img-fluid {
             width: 100%;
             height: auto;
         }
+
+        /* Estilo do contêiner principal */
+        .container {
+            margin-top: 40px;
+        }
+
+        /* Estilo do título principal */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+
+        /* Títulos de seção */
+        h2 {
+            color: #495057;
+            margin-top: 20px;
+        }
+
+        /* Botão para retornar à página inicial */
+        .btn-secondary {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 40px auto 0;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+    <!-- Contêiner principal para centralizar o conteúdo -->
     <div class="container">
+        <!-- Título principal da página -->
         <h1>Resultados da Regressão</h1>
         
+        <!-- Avaliação do Modelo: Métricas de desempenho -->
         <div class="row">
             <div class="col-md-6">
                 <h2>Avaliação do Modelo</h2>
-                <p>O Erro Médio Quadrático (MSE) é uma medida que quantifica a diferença entre os valores previstos pelo modelo e os valores reais. Neste caso, o MSE é {{ mse }}.</p>
-                <p>A Pontuação R^2 é uma métrica que indica a proporção da variância nos valores da variável dependente que é previsível a partir dos recursos independentes. Ela fornece uma medida da qualidade das previsões do modelo. Neste caso, a Pontuação R^2 é {{ r2 }}.</p>
+                <p>
+                    O Erro Médio Quadrático (MSE) é uma medida que quantifica a diferença entre os valores previstos pelo modelo e os valores reais.
+                    Neste caso, o MSE é 33304739.761032484.
+                </p>
+                <p>
+                    A Pontuação R² é uma métrica que indica a proporção da variância nos valores da variável dependente que é previsível a partir dos recursos independentes.
+                    Neste caso, a Pontuação R² é 3.791078500980.
+                </p>
             </div>
         </div>
 
+        <!-- Gráfico: Previsões de Salário vs Valores Reais -->
         <div class="row mt-4">
             <div class="col-md-6">
                 <h2>Previsões de Salário vs Real</h2>
                 <img src="{{ predictions_image }}" alt="Previsões de Salário vs Real" class="img-fluid">
-                <p>Este gráfico compara as previsões de salário feitas pelo modelo com os valores reais de salário.</p>
+                <p>
+                    Este gráfico compara as previsões de salário feitas pelo modelo com os valores reais de salário.
+                </p>
             </div>
         </div>
 
+        <!-- Gráfico: Resíduos do modelo -->
         <div class="row mt-4">
             <div class="col-md-6">
                 <h2>Gráfico de Resíduos</h2>
                 <img src="{{ residuals_plot_image }}" alt="Gráfico de Resíduos" class="img-fluid">
-                <p>Este gráfico mostra os resíduos, ou seja, a diferença entre os valores reais e as previsões do modelo.</p>
+                <p>
+                    Este gráfico mostra os resíduos, ou seja, a diferença entre os valores reais e as previsões do modelo.
+                </p>
             </div>
         </div>
 
+        <!-- Gráfico: Distribuição dos Resíduos -->
         <div class="row mt-4">
             <div class="col-md-6">
                 <h2>Distribuição dos Resíduos</h2>
                 <img src="{{ residuals_distribution_image }}" alt="Distribuição dos Resíduos" class="img-fluid">
-                <p>Este gráfico exibe a distribuição dos resíduos, ou seja, os erros de previsão do modelo.</p>
+                <p>
+                    Este gráfico exibe a distribuição dos resíduos, ou seja, os erros de previsão do modelo.
+                </p>
             </div>
         </div>
 
-        <br>
+        <!-- Botão para voltar à página inicial -->
         <a href="/" class="btn btn-secondary">Voltar para a Página Inicial</a>
     </div>
-    <!-- JavaScript -->
+    
+    <!-- JavaScript para funcionalidades do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>

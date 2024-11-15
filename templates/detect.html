@@ -1,33 +1,45 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resultados</title>
     <style>
+        /* Estilo geral para o corpo da página */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f4f4f4; /* Cor de fundo clara */
         }
+        /* Container centralizado para conteúdo */
         .container {
-            width: 50%;
-            margin: auto;
+            width: 60%; /* Aumentado para melhor aproveitamento do espaço em telas maiores */
+            margin: 50px auto; /* Centraliza o container vertical e horizontalmente */
             text-align: center;
-            padding-top: 50px;
+            padding: 20px;
+            background-color: #ffffff; /* Fundo branco para destaque */
+            border-radius: 10px; /* Bordas arredondadas */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
         }
+        /* Estilo do título */
         h1 {
-            color: #333;
+            color: #333; /* Cor do texto */
+            margin-bottom: 20px; /* Espaçamento inferior */
         }
+        /* Estilo da imagem */
         img {
-            max-width: 100%;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 100%; /* Responsividade */
+            border-radius: 5px; /* Bordas arredondadas */
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra mais evidente */
         }
     </style>
 </head>
 <body>
+    <!-- Container para os resultados -->
     <div class="container">
         <h1>Rostos Detectados:</h1>
+        <!-- Imagem dinâmica carregada pelo backend -->
         <img src="{{ url_for('static', filename=detected_image) }}" alt="Rostos Detectados">
     </div>
 </body>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Previsão do Modelo</title>
     <style>
+        /* Estilo básico da página para tipografia e layout */
         body {
             font-family: Arial, sans-serif;
             background-color: #f8f9fa;
@@ -12,54 +13,76 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* Estilo do contêiner centralizado */
         .container {
             max-width: 800px;
             margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
+        /* Estilo do título principal */
         h1 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
+            font-size: 1.8em;
+            color: #343a40;
         }
+        /* Parágrafo de descrição */
         p {
             margin-bottom: 20px;
+            font-size: 1em;
+            color: #555;
+            line-height: 1.5;
+            text-align: center;
         }
+        /* Estilo para a imagem, centralizada e responsiva */
         img {
             display: block;
-            margin: 0 auto;
+            margin: 0 auto 20px;
             max-width: 100%;
             height: auto;
-            margin-bottom: 20px;
+            border-radius: 5px;
         }
+        /* Botão estilizado com animação */
         .btn {
             display: block;
-            width: 100px;
+            width: 120px;
             margin: 20px auto;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
             background-color: #007bff;
-            color: #fff;
+            color: #ffffff;
+            font-size: 1em;
+            font-weight: bold;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
         }
+        /* Mudança de cor ao passar o mouse no botão */
         .btn:hover {
             background-color: #0056b3;
         }
     </style>
 </head>
 <body>
+    <!-- Contêiner principal que centraliza todo o conteúdo -->
     <div class="container">
+        <!-- Título da previsão -->
         <h1>Previsão da Acurácia do Modelo</h1>
+        
+        <!-- Exibição da precisão do modelo; a variável será renderizada pelo servidor -->
         <p>A precisão do modelo de previsão de aprovação de empréstimo é: {{ accuracy }}</p>
+        
+        <!-- Imagem da matriz de confusão -->
         <img src="{{ url_for('static', filename='imagem/confusion_matrix.png') }}" alt="Confusion Matrix">
         <p>Figura: Matriz de Confusão</p>
+        
+        <!-- Botão para retornar à página inicial -->
         <a href="{{ url_for('index') }}" class="btn">Voltar</a>
     </div>
 </body>
 </html>
-

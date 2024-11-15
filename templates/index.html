@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Minha Página</title>
+    
+    <!-- Importação do Bootstrap para estilização rápida e responsiva -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"> <!-- Para ícones -->
+    
     <style>
         /* Estilo personalizado para o menu lateral */
         #sidebar {
@@ -14,18 +18,30 @@
             height: 100%;
             background-color: #f8f9fa;
             transition: left 0.3s;
+            overflow-y: auto; /* Para permitir rolagem se o menu for maior que a tela */
         }
         #sidebar.active {
             left: 0;
         }
         #dismiss {
             font-size: 20px;
-            margin-left: 220px;
+            margin: 15px;
             cursor: pointer;
+            text-align: right;
         }
-        /* Estilo para os itens do menu e submenu */
         .menu-item, .submenu-item {
-            margin-left: 20px; /* Margem à esquerda */
+            margin-left: 20px;
+            padding: 10px 0;
+        }
+        /* Adiciona uma borda de separação nos itens do menu */
+        .menu-item {
+            border-bottom: 1px solid #ddd;
+        }
+        .submenu-item {
+            margin-left: 40px; /* Margem para destacar submenus */
+        }
+        .container {
+            margin-left: 270px; /* Espaço para o menu lateral */
         }
     </style>
 </head>
@@ -36,7 +52,7 @@
     <button class="navbar-toggler" type="button" id="sidebarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Dados de uma Conta Bancaria dos Clientes</a>
+    <a class="navbar-brand" href="#">Dados de uma Conta Bancária dos Clientes</a>
 </nav>
 
 <!-- Menu lateral -->
@@ -47,29 +63,31 @@
         </div>
         <ul class="list-unstyled components">
             <li class="menu-item">
-                <a href="{{ url_for('add_account') }}">Adicionar Conta</a>
+                <a href="{{ url_for('add_account') }}"><i class="fas fa-plus-circle"></i> Adicionar Conta</a>
             </li>
             <li class="menu-item">
-                <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Resultados de Modelos</a>
+                <a href="#submenu1" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-chart-bar"></i> Resultados de Modelos</a>
                 <ul class="collapse list-unstyled" id="submenu1">
-                    <li><a href="{{ url_for('predict_loan_approval') }}" class="submenu-item">Modelo de Classificação</a></li>
-                    <li><a href="{{ url_for('regression_results') }}" class="submenu-item">Modelo de Regressão</a></li>
-                    <li><a href="{{ url_for('clusters') }}" class="submenu-item">Modelo de Clusterização</a></li>
+                    <li><a href="{{ url_for('predict_loan_approval') }}" class="submenu-item"><i class="fas fa-check-circle"></i> Modelo de Classificação</a></li>
+                    <li><a href="{{ url_for('regression_results') }}" class="submenu-item"><i class="fas fa-chart-line"></i> Modelo de Regressão</a></li>
+                    <li><a href="{{ url_for('clusters') }}" class="submenu-item"><i class="fas fa-project-diagram"></i> Modelo de Clusterização</a></li>
                 </ul>
             </li>
             <li class="menu-item">
-                <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Previsão de Modelos</a>
+                <a href="#submenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-brain"></i> Previsão de Modelos</a>
                 <ul class="collapse list-unstyled" id="submenu2">
-                    <li><a href="{{ url_for('predict_model') }}" class="submenu-item">Previsão de Classificação</a></li>
-                    <li><a href="{{ url_for('predict_regress') }}" class="submenu-item">Previsão de Regressão</a></li>
+                    <li><a href="{{ url_for('predict_model') }}" class="submenu-item"><i class="fas fa-layer-group"></i> Previsão de Classificação</a></li>
+                    <li><a href="{{ url_for('predict_regress') }}" class="submenu-item"><i class="fas fa-analytics"></i> Previsão de Regressão</a></li>
                 </ul>
             </li>
             <li class="menu-item">
-                <li><a href="{{ url_for('Visao') }}" class="submenu-item">Visao Computacional</a></li>
+                <a href="{{ url_for('Visao') }}" class="submenu-item"><i class="fas fa-eye"></i> Visão Computacional</a></li>
             </li>
         </ul>
     </nav>
 </div>
+
+<!-- Conteúdo principal -->
 <div class="container mt-4">
     <h1>Lista de Contas Bancárias</h1>
     <div class="table-responsive">
@@ -84,10 +102,9 @@
                     <th>Funcionário</th>
                     <th>Salário</th>
                     <th>Saldo da Conta</th>
-                    <th>Credito Imobiliário</th>
+                    <th>Crédito Imobiliário</th>
                     <th>Empréstimo</th>
                     <th>Ações</th>
-                    
                 </tr>
             </thead>
             <tbody>
@@ -102,30 +119,31 @@
                     <td>{{ account[6] }}</td>
                     <td>{{ account[7] }}</td>
                     <td>{% if account[8] %}Sim{% else %}Não{% endif %}</td>
-                    <td>{{ "Sim" if account[9] else "Não" }}</td> <!-- Exibe "Sim" se o valor for True, senão "Não" -->
+                    <td>{{ "Sim" if account[9] else "Não" }}</td>
                     <td>
                         <a href="{{ url_for('view_account', id=account[0]) }}" class="btn btn-primary btn-sm">Visualizar</a>
                         <a href="{{ url_for('edit_account', id=account[0]) }}" class="btn btn-warning btn-sm">Editar</a>
-                        <form action="{{ url_for('delete_account', id=account[0]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta conta bancária?')">
+                        <form action="{{ url_for('delete_account', id=account[0]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta conta bancária?')" style="display: inline;">
                             <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
                         </form>
                     </td>
-                    
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
+
+<!-- Scripts necessários para funcionalidade -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script>
-    // Ativar/desativar o menu lateral ao clicar no botão de toggler da barra de navegação
+    // Função para ativar/desativar o menu lateral
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
-    // Fechar o menu lateral ao clicar no botão "dismiss"
+    // Função para fechar o menu lateral ao clicar no botão "dismiss"
     $('#dismiss').on('click', function () {
         $('#sidebar').removeClass('active');
     });

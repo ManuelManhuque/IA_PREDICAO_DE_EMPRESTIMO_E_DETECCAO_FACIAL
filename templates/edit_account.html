@@ -4,46 +4,121 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Conta Bancária</title>
+    
+    <!-- Importação de estilo CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <style>
+        /* Estilo adicional para melhorar o layout */
+        body {
+            background-color: #f8f9fa; /* Fundo claro */
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 20px;
+        }
+        .confirmation-message {
+            margin-top: 20px;
+            display: none;
+            text-align: center;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <h1>Editar Conta Bancária</h1>
-    <form action="{{ url_for('edit_account', id=account[0]) }}" method="POST">
-        <label for="nome">Nome:</label>
-        <input type="text" name="nome" value="{{ account[1] }}" required><br>
-        <label for="sexo">Sexo:</label>
-        <select name="sexo" required>
-            <option value="Masculino" {% if account[2] == 'Masculino' %}selected{% endif %}>Masculino</option>
-            <option value="Feminino" {% if account[2] == 'Feminino' %}selected{% endif %}>Feminino</option>
-        </select><br>
-        <label for="idade">Idade:</label>
-        <input type="number" name="idade" value="{{ account[3] }}" required><br>
-        <label for="tipo_conta">Tipo de Conta:</label>
-        <select name="tipo_conta" required>
-            <option value="Corrente" {% if account[4] == 'Corrente' %}selected{% endif %}>Corrente</option>
-            <option value="Poupança" {% if account[4] == 'Poupança' %}selected{% endif %}>Poupança</option>
-        </select><br>
-        <label for="funcionario">Funcionário:</label>
-        <select name="funcionario" required>
-            <option value="1" {% if account[5] %}selected{% endif %}>Sim</option>
-            <option value="0" {% if not account[5] %}selected{% endif %}>Não</option>
-        </select><br>
-        <label for="salario">Salário:</label>
-        <input type="number" name="salario" value="{{ account[6] }}"><br>
-        <label for="saldo_conta">Saldo da Conta:</label>
-        <input type="number" name="saldo_conta" value="{{ account[7] }}"><br>
-        <label for="credito_imobiliario">Crédito Imobiliário:</label>
-        <select name="credito_imobiliario" required>
-            <option value="1" {% if account[8] %}selected{% endif %}>Sim</option>
-            <option value="0" {% if not account[8] %}selected{% endif %}>Não</option>
-        </select><br>
-        <label for="emprestimo">Empréstimo:</label>
-        <select name="emprestimo" required>
-            <option value="1" {% if account[9] %}selected{% endif %}>Sim</option>
-            <option value="0" {% if not account[9] %}selected{% endif %}>Não</option>
-        </select><br>
-        <button type="submit">Salvar Alterações</button>
-    </form>
+    <div class="container">
+        <h1>Editar Conta Bancária</h1>
+        <form id="editForm" action="{{ url_for('edit_account', id=account[0]) }}" method="POST">
+            <!-- Campo de entrada para nome -->
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" class="form-control" value="{{ account[1] }}" required>
+
+            <!-- Campo de seleção para sexo -->
+            <label for="sexo">Sexo:</label>
+            <select name="sexo" class="form-control" required>
+                <option value="Masculino" {% if account[2] == 'Masculino' %}selected{% endif %}>Masculino</option>
+                <option value="Feminino" {% if account[2] == 'Feminino' %}selected{% endif %}>Feminino</option>
+            </select>
+
+            <!-- Campo de entrada para idade -->
+            <label for="idade">Idade:</label>
+            <input type="number" name="idade" class="form-control" value="{{ account[3] }}" min="18" max="100" required>
+
+            <!-- Campo de seleção para tipo de conta -->
+            <label for="tipo_conta">Tipo de Conta:</label>
+            <select name="tipo_conta" class="form-control" required>
+                <option value="Corrente" {% if account[4] == 'Corrente' %}selected{% endif %}>Corrente</option>
+                <option value="Poupança" {% if account[4] == 'Poupança' %}selected{% endif %}>Poupança</option>
+            </select>
+
+            <!-- Campo de seleção para funcionário -->
+            <label for="funcionario">Funcionário:</label>
+            <select name="funcionario" class="form-control" required>
+                <option value="1" {% if account[5] %}selected{% endif %}>Sim</option>
+                <option value="0" {% if not account[5] %}selected{% endif %}>Não</option>
+            </select>
+
+            <!-- Campo de entrada para salário -->
+            <label for="salario">Salário:</label>
+            <input type="number" name="salario" class="form-control" value="{{ account[6] }}" min="0" step="0.01" required>
+
+            <!-- Campo de entrada para saldo da conta -->
+            <label for="saldo_conta">Saldo da Conta:</label>
+            <input type="number" name="saldo_conta" class="form-control" value="{{ account[7] }}" min="0" step="0.01" required>
+
+            <!-- Campo de seleção para crédito imobiliário -->
+            <label for="credito_imobiliario">Crédito Imobiliário:</label>
+            <select name="credito_imobiliario" class="form-control" required>
+                <option value="1" {% if account[8] %}selected{% endif %}>Sim</option>
+                <option value="0" {% if not account[8] %}selected{% endif %}>Não</option>
+            </select>
+
+            <!-- Campo de seleção para empréstimo -->
+            <label for="emprestimo">Empréstimo:</label>
+            <select name="emprestimo" class="form-control" required>
+                <option value="1" {% if account[9] %}selected{% endif %}>Sim</option>
+                <option value="0" {% if not account[9] %}selected{% endif %}>Não</option>
+            </select>
+
+            <!-- Botão para enviar o formulário -->
+            <button type="submit" class="btn btn-primary btn-block">Salvar Alterações</button>
+        </form>
+
+        <!-- Mensagem de confirmação -->
+        <div id="confirmationMessage" class="confirmation-message">Alterações salvas com sucesso!</div>
+    </div>
+
+    <!-- Scripts do Bootstrap e JavaScript para validação -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Exibe mensagem de confirmação após submissão bem-sucedida
+        document.getElementById('editForm').onsubmit = function () {
+            document.getElementById('confirmationMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('confirmationMessage').style.display = 'none';
+            }, 3000); // A mensagem desaparece após 3 segundos
+            return true; // Prossegue com a submissão
+        };
+    </script>
 </body>
 </html>

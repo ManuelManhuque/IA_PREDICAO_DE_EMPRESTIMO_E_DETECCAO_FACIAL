@@ -4,38 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prever com Regressão Linear</title>
+    
+    <!-- Bootstrap para estilização básica e responsividade -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        /* Estilo do corpo da página */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container principal centralizado com sombra e borda arredondada */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Título principal da página */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+
+        /* Botões de submissão e voltar com largura total */
+        .btn-primary, .btn-secondary {
+            width: 100%;
+            font-size: 1em;
+            font-weight: bold;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        /* Estilo do contêiner de resultado */
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            color: #343a40;
+            text-align: center;
+        }
+
+        /* Título do resultado */
+        .result h3 {
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 <body>
+    <!-- Contêiner principal para centralizar o conteúdo da página -->
     <div class="container">
+        <!-- Título da página -->
         <h1>Prever com Regressão Linear</h1>
+        
+        <!-- Formulário para entrada de dados de previsão -->
         <div class="predict-container">
             <form action="{{ url_for('predict_regression_result') }}" method="POST">
+                
+                <!-- Campo Idade -->
                 <div class="form-group">
                     <label for="idade">Idade:</label>
-                    <input type="number" class="form-control" id="idade" name="idade">
+                    <input type="number" class="form-control" id="idade" name="idade" required min="18" max="100">
                 </div>
+
+                <!-- Campo Tipo de Conta -->
                 <div class="form-group">
                     <label for="tipo_conta">Tipo de Conta:</label>
-                    <select class="form-control" id="tipo_conta" name="tipo_conta">
+                    <select class="form-control" id="tipo_conta" name="tipo_conta" required>
                         <option value="Corrente">Corrente</option>
                         <option value="Poupança">Poupança</option>
                     </select>
                 </div>
+
+                <!-- Campo Saldo da Conta -->
                 <div class="form-group">
                     <label for="saldo_conta">Saldo da Conta:</label>
-                    <input type="number" class="form-control" id="saldo_conta" name="saldo_conta">
+                    <input type="number" class="form-control" id="saldo_conta" name="saldo_conta" required min="0" step="0.01">
                 </div>
+
+                <!-- Botão para enviar o formulário e botão de voltar -->
                 <button type="submit" class="btn btn-primary">Prever</button>
                 <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar</a>
             </form>
 
-            <!-- Div para exibir o resultado da previsão -->
+            <!-- Exibição do resultado da previsão -->
             <div class="result">
                 {% if prediction_value is defined %}
                     <h3>Resultado da Previsão:</h3>
-                    <p><strong>Valor Previsto:<strong/> {{ prediction_value|round(2) }} MZN</p>
+                    <p><strong>Valor Previsto:</strong> {{ prediction_value|round(2) }} MZN</p>
                 {% endif %}
             </div>
         </div>

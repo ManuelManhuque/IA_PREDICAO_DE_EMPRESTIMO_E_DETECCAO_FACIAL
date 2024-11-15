@@ -1,59 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detecção de Rosto</title>
+    
+    <!-- Estilos inline para estilização da página -->
     <style>
+        /* Estilo do corpo da página */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
+
+        /* Container principal para centralizar o conteúdo */
         .container {
             width: 50%;
+            max-width: 600px;
             margin: auto;
             text-align: center;
             padding-top: 50px;
         }
+
+        /* Estilo do título principal */
         h1 {
             color: #333;
+            margin-bottom: 20px;
         }
+
+        /* Esconde o input de arquivo padrão */
         input[type="file"] {
             display: none;
         }
+
+        /* Botão customizado para upload de arquivo */
         .custom-file-upload {
             border: 1px solid #ccc;
             display: inline-block;
-            padding: 6px 12px;
+            padding: 10px 16px;
             cursor: pointer;
             background-color: #f0f0f0;
             border-radius: 5px;
+            font-size: 16px;
+            color: #333;
+            transition: background-color 0.3s ease;
         }
+
+        /* Cor de fundo ao passar o mouse sobre o botão de upload */
         .custom-file-upload:hover {
             background-color: #e0e0e0;
         }
+
+        /* Botão de submissão estilizado */
         .btn-submit {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
+            margin-top: 20px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
+
+        /* Cor de fundo ao passar o mouse sobre o botão de submissão */
         .btn-submit:hover {
             background-color: #45a049;
         }
     </style>
 </head>
 <body>
+    
+    <!-- Container principal -->
     <div class="container">
+        
+        <!-- Título da página -->
         <h1>Detecção de Rosto</h1>
+        
+        <!-- Formulário de upload da imagem -->
         <form method="POST" action="/detect" enctype="multipart/form-data">
+            
+            <!-- Botão de seleção de arquivo -->
             <label for="file" class="custom-file-upload">Selecionar Imagem</label>
-            <input type="file" name="file" id="file">
+            <input type="file" name="file" id="file" required>
+            
+            <!-- Botão para submeter o formulário e iniciar a detecção -->
             <input type="submit" value="Detectar" class="btn-submit">
         </form>
     </div>
+    
 </body>
 </html>

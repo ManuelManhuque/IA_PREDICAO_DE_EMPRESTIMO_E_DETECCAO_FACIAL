@@ -4,26 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalhes da Conta Bancária</title>
+    
+    <!-- Bootstrap para estilização e responsividade -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
     <style>
+        /* Estilo do corpo da página */
         body {
             background-color: #f8f9fa;
         }
+        
+        /* Estilo do cartão com sombras e transição */
         .card {
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
             transition: 0.3s;
             border-radius: 15px;
+            padding: 20px;
         }
+        
+        /* Sombras adicionais ao passar o mouse sobre o cartão */
         .card:hover {
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+        /* Espaçamento no título */
+        h1 {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #343a40;
+        }
+
+        /* Estilo dos botões para espaçamento e aparência */
+        .btn {
+            margin-top: 10px;
+            width: 120px;
         }
     </style>
 </head>
 <body class="container">
+    
+    <!-- Título principal -->
     <h1 class="mt-4 mb-3">Detalhes da Conta Bancária</h1>
-    <div class="card p-4">
+    
+    <!-- Cartão com informações da conta bancária -->
+    <div class="card">
         <div class="row">
             <div class="col-md-6">
+                <!-- Detalhes da conta bancária usando variáveis de contexto -->
                 <p><strong>Nome:</strong> {{ account[1] }}</p>
                 <p><strong>Sexo:</strong> {{ account[2] }}</p>
                 <p><strong>Idade:</strong> {{ account[3] }}</p>
@@ -35,18 +63,25 @@
                 <p><strong>Empréstimo:</strong> {% if account[9] %}Sim{% else %}Não{% endif %}</p>
             </div>
         </div>
+        
+        <!-- Botões de ação: Editar, Excluir e Voltar -->
         <div class="row mt-3">
             <div class="col-md-6">
                 <form action="{{ url_for('delete_account', id=account[0]) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta conta bancária?')">
+                    <!-- Botão para Editar a conta -->
                     <a href="{{ url_for('edit_account', id=account[0]) }}" class="btn btn-primary mr-2">Editar</a>
+                    
+                    <!-- Botão para Excluir a conta com confirmação -->
                     <button type="submit" class="btn btn-danger">Excluir</button>
-                    <button>       
-                        <a href="javascript:history.back()" class="btn btn-secondary">Voltar</a>
-                    </button>
+                    
+                    <!-- Botão para Voltar -->
+                    <a href="javascript:history.back()" class="btn btn-secondary ml-2">Voltar</a>
                 </form>
             </div>
         </div>
     </div>
+    
+    <!-- JavaScript para funcionalidades do Bootstrap -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
