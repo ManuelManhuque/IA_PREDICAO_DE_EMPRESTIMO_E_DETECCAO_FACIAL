@@ -33,6 +33,23 @@
             border-radius: 5px; /* Bordas arredondadas */
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Sombra mais evidente */
         }
+        /* Estilo do botão de voltar */
+        .btn-back {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Efeito hover do botão de voltar */
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -41,6 +58,9 @@
         <h1>Rostos Detectados:</h1>
         <!-- Imagem dinâmica carregada pelo backend -->
         <img src="{{ url_for('static', filename=detected_image) }}" alt="Rostos Detectados">
+        
+        <!-- Botão de voltar -->
+        <a href="{{ url_for('Visao') }}" class="btn-back">Voltar</a>
     </div>
 </body>
 </html>

@@ -70,6 +70,29 @@
         .btn-submit:hover {
             background-color: #45a049;
         }
+
+        /* Estilo do botão de voltar */
+        .btn-back {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 40px; /* Ajustei o valor do margin-top */
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block; /* Garantir que seja tratado como bloco */
+            width:fit-content; /* Garantir que ocupe a largura total */
+        }
+
+        /* Cor de fundo ao passar o mouse sobre o botão de voltar */
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
@@ -90,6 +113,9 @@
             <!-- Botão para submeter o formulário e iniciar a detecção -->
             <input type="submit" value="Detectar" class="btn-submit">
         </form>
+
+        <!-- Botão de voltar -->
+        <a href="javascript:history.back()" class="btn-back">Voltar</a>
     </div>
     
 </body>

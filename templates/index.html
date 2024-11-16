@@ -17,8 +17,9 @@
             width: 250px;
             height: 100%;
             background-color: #f8f9fa;
-            transition: left 0.3s;
+            transition: left 0.3s ease-in-out;
             overflow-y: auto; /* Para permitir rolagem se o menu for maior que a tela */
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
         }
         #sidebar.active {
             left: 0;
@@ -33,7 +34,6 @@
             margin-left: 20px;
             padding: 10px 0;
         }
-        /* Adiciona uma borda de separação nos itens do menu */
         .menu-item {
             border-bottom: 1px solid #ddd;
         }
@@ -42,6 +42,23 @@
         }
         .container {
             margin-left: 270px; /* Espaço para o menu lateral */
+            transition: margin-left 0.3s ease-in-out;
+        }
+        /* Efeito de hover nos links do menu */
+        .menu-item a:hover, .submenu-item a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+        /* Efeito nos botões da tabela */
+        .btn-sm {
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .btn-sm:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        .btn-sm:active {
+            transform: scale(1);
         }
     </style>
 </head>
@@ -142,10 +159,12 @@
     // Função para ativar/desativar o menu lateral
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
+        $('.container').toggleClass('active');
     });
     // Função para fechar o menu lateral ao clicar no botão "dismiss"
     $('#dismiss').on('click', function () {
         $('#sidebar').removeClass('active');
+        $('.container').removeClass('active');
     });
 </script>
 </body>

@@ -1,16 +1,92 @@
-import pickle
-import cv2
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import sqlite3
 import joblib
+import pickle
+import cv2
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.cluster import KMeans  
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 app.secret_key = 'manuel#2002'
+
+# Inicialize o gerenciador de login após a definição de `app`
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'login'
+
+
+
+# Função para criar a tabela de usuários
+def create_user_table():
+    conn = sqlite3.connect('contas_bancarias.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS usuarios
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  username TEXT UNIQUE NOT NULL,
+                  password TEXT NOT NULL)''')
+    conn.commit()
+    conn.close()
+
+create_user_table()
+
+# Adicionar usuário padrão
+def add_default_user():
+    conn = sqlite3.connect('contas_bancarias.db')
+    c = conn.cursor()
+
+    # Verifica se o usuário já existe para evitar duplicações
+    c.execute("SELECT * FROM usuarios WHERE username = ?", ('Manuel Manhuque',))
+    user = c.fetchone()
+
+    if not user:
+        # Hash da senha para armazenamento seguro
+        hashed_password = generate_password_hash('1234', method='pbkdf2:sha256')
+
+
+        c.execute("INSERT INTO usuarios (username, password) VALUES (?, ?)", ('Manuel Manhuque', hashed_password))
+        conn.commit()
+
+    conn.close()
+
+add_default_user()
+
+# Classe de usuário para integração com Flask-Login
+class User(UserMixin):
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+@login_manager.user_loader
+def load_user(user_id):
+    conn = sqlite3.connect('contas_bancarias.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM usuarios WHERE id=?", (user_id,))
+    user = c.fetchone()
+    conn.close()
+    if user:
+        return User(id=user[0], username=user[1], password=user[2])
+    return None
+
+def create_user_table():
+    conn = sqlite3.connect('contas_bancarias.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS usuarios
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  username TEXT UNIQUE NOT NULL,
+                  password TEXT NOT NULL)''')
+    conn.commit()
+    conn.close()
+
+create_user_table()
+
+
+
 
 
 
@@ -94,9 +170,38 @@ def detect_faces(image):
     return faces
 
 
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        conn = sqlite3.connect('contas_bancarias.db')
+        c = conn.cursor()
+        c.execute("SELECT * FROM usuarios WHERE username = ?", (username,))
+        user = c.fetchone()
+        conn.close()
+
+        if user and check_password_hash(user[2], password):
+            user_obj = User(id=user[0], username=user[1], password=user[2])
+            login_user(user_obj)
+            flash('Login bem-sucedido!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('Nome de usuário ou senha inválidos.', 'danger')
+
+    return render_template('login.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Você saiu com sucesso.', 'success')
+    return redirect(url_for('login'))
 
 
-@app.route('/')
+@app.route('/index')
+@login_required
 def index():
     conn = sqlite3.connect('C:/Users/manuel/Desktop/projecto inar/contas_bancarias.db')
     c = conn.cursor()
@@ -231,15 +336,13 @@ def predict_model_result():
 @app.route('/regression_results')
 def regression_results():
     # Carregar os resultados da regressão
-    mse, r2, predictions_image, residuals_plot_image, residuals_distribution_image = load_regression_results()
-    
+    #mse, r2 = load_regression_results()
+
+   
+
     # Passar os resultados e os caminhos das imagens para o template HTML
-    return render_template('regression_results.html', mse=mse, r2=r2,
-                           predictions_image=predictions_image, residuals_plot_image=residuals_plot_image,
-                           residuals_distribution_image=residuals_distribution_image)
-  
-  
-  
+    return render_template('regression_results.html'                          )
+
 
 @app.route('/predict_regress')
 def predict_regress():

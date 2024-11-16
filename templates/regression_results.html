@@ -6,104 +6,132 @@
     <title>Resultados da Regressão</title>
     
     <!-- Bootstrap para estilização e responsividade -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     
     <style>
-        /* Estilo da imagem para responsividade */
-        .img-fluid {
-            width: 100%;
-            height: auto;
+        /* Estilo geral da página */
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+            color: #343a40;
         }
 
-        /* Estilo do contêiner principal */
+        /* Contêiner principal */
         .container {
             margin-top: 40px;
         }
 
-        /* Estilo do título principal */
+        /* Título principal */
         h1 {
             text-align: center;
-            margin-bottom: 30px;
-            color: #343a40;
+            margin-bottom: 40px;
+            color: #007bff;
+            font-size: 2.5rem;
         }
 
-        /* Títulos de seção */
+        /* Estilo para os subtítulos */
         h2 {
             color: #495057;
-            margin-top: 20px;
+            margin-top: 30px;
+            font-size: 1.5rem;
         }
 
-        /* Botão para retornar à página inicial */
+        /* Títulos dos parágrafos */
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #6c757d;
+        }
+
+        /* Efeito de hover nos parágrafos e links */
+        p:hover {
+            color: #007bff;
+        }
+
+        /* Estilo das imagens para garantir responsividade */
+        .img-fluid {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilo do botão de voltar */
         .btn-secondary {
             display: block;
             width: 100%;
-            max-width: 200px;
-            margin: 40px auto 0;
+            max-width: 250px;
+            margin: 40px auto;
+            padding: 10px;
             font-weight: bold;
+            border-radius: 30px;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Efeito de hover no botão */
+        .btn-secondary:hover {
+            background-color: #0056b3;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Estilo da linha de gráficos */
+        .row.mt-4 {
+            margin-top: 40px;
+        }
+
+        /* Estilo para a avaliação do modelo */
+        .evaluation-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .evaluation-box p {
+            font-size: 1.2rem;
+        }
+
+        /* Ajuste de responsividade para dispositivos móveis */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            .btn-secondary {
+                width: 80%;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Contêiner principal para centralizar o conteúdo -->
+
     <div class="container">
         <!-- Título principal da página -->
         <h1>Resultados da Regressão</h1>
         
         <!-- Avaliação do Modelo: Métricas de desempenho -->
-        <div class="row">
-            <div class="col-md-6">
-                <h2>Avaliação do Modelo</h2>
-                <p>
-                    O Erro Médio Quadrático (MSE) é uma medida que quantifica a diferença entre os valores previstos pelo modelo e os valores reais.
-                    Neste caso, o MSE é 33304739.761032484.
-                </p>
-                <p>
-                    A Pontuação R² é uma métrica que indica a proporção da variância nos valores da variável dependente que é previsível a partir dos recursos independentes.
-                    Neste caso, a Pontuação R² é 3.791078500980.
-                </p>
-            </div>
+        <div class="evaluation-box">
+            <h2>Avaliação do Modelo</h2>
+            <p>
+                O <b>Erro Médio Quadrático (MSE)</b> é uma medida que quantifica a diferença entre os valores previstos pelo modelo e os valores reais.
+                Neste caso, o MSE é <b>33304739.761032484</b>.
+            </p>
+            <p>
+                A <b>Pontuação R²</b> é uma métrica que indica a proporção da variância nos valores da variável dependente que é previsível a partir dos recursos independentes.
+                Neste caso, a Pontuação R² é <b>3.791078500980</b>.
+            </p>
         </div>
 
-        <!-- Gráfico: Previsões de Salário vs Valores Reais -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <h2>Previsões de Salário vs Real</h2>
-                <img src="{{ predictions_image }}" alt="Previsões de Salário vs Real" class="img-fluid">
-                <p>
-                    Este gráfico compara as previsões de salário feitas pelo modelo com os valores reais de salário.
-                </p>
-            </div>
-        </div>
-
-        <!-- Gráfico: Resíduos do modelo -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <h2>Gráfico de Resíduos</h2>
-                <img src="{{ residuals_plot_image }}" alt="Gráfico de Resíduos" class="img-fluid">
-                <p>
-                    Este gráfico mostra os resíduos, ou seja, a diferença entre os valores reais e as previsões do modelo.
-                </p>
-            </div>
-        </div>
-
-        <!-- Gráfico: Distribuição dos Resíduos -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <h2>Distribuição dos Resíduos</h2>
-                <img src="{{ residuals_distribution_image }}" alt="Distribuição dos Resíduos" class="img-fluid">
-                <p>
-                    Este gráfico exibe a distribuição dos resíduos, ou seja, os erros de previsão do modelo.
-                </p>
-            </div>
-        </div>
 
         <!-- Botão para voltar à página inicial -->
-        <a href="/" class="btn btn-secondary">Voltar para a Página Inicial</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Voltar para a Página Inicial</a>
     </div>
     
     <!-- JavaScript para funcionalidades do Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
